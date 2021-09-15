@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<embarkmodules>
+    <module Class="XRL.CharacterBuilds.Qud.QudLimbsModule">
+        <window ID="Chargen/ChooseLimbs" Prefab="CategoryMenus" Class="XRL.CharacterBuilds.Qud.UI.QudLimbsModuleWindow">
+            <name>Limbs</name>
+            <title>:Choose limbs:</title>
+        </window>
+    </module>
+</embarkmodules>
