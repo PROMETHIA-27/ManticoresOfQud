@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+    <object Name="PROMETHIA_AquamarineBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Fish" />
+    </object>
+    <object Name="PROMETHIA_SkylightBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Bird" />
+    </object>
+    <object Name="PROMETHIA_WirehandBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Snake" />
+    </object>
+    <object Name="PROMETHIA_SwampmarchBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Frog" />
+    </object>
+    <object Name="PROMETHIA_WatcherBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Star" />
+    </object>
+    <object Name="PROMETHIA_ImplacableBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Ooze" />
+    </object>
+    <object Name="PROMETHIA_HunterseekerBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Spider" />
+    </object>
+    <object Name="PROMETHIA_ShieldedBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Crab" />
+    </object>
+    <object Name="PROMETHIA_AllhearingBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Fungus" />
+    </object>
+    <object Name="PROMETHIA_BushwackBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Tree" />
+    </object>
+    <object Name="PROMETHIA_TrojanBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="AnimalChair" />
+    </object>
+    <object Name="PROMETHIA_PhalanxBody" Inherits="Humanoid">
+        <part Name="Body" Anatomy="Snail" />
+    </object>
+</objects>

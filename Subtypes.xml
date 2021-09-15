@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<subtypes>
+
+    <class ID="Purposes" ChargenTitle="choose purpose" SingularTitle="purpose" StatBoxDisplay="true">
+
+        <subtype Name="Aquamarine" Code="a" Gear="StartingGear_Aquamarine" Tile="creatures/sw_glowfish.bmp" DetailColor="B" BodyObject="PROMETHIA_AquamarineBody">
+            <stat Name="Agility" Bonus="3" />
+            <skills>
+              <skill Name="Acrobatics" />
+              <skill Name="Acrobatics_Dodge" />
+              <skill Name="Endurance_Swimming" />
+              <skill Name="Endurnace_Longstrider" />
+            </skills>
+            <reputations>
+              <reputation With="Fish" Value="600" />
+            </reputations>
+            <extrainfo>{{B|While the water of life recedes from this salt-soaked land, the old seahands of the Tleila stubbornly remain.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Skylight" Code="b" Gear="StartingGear_Skylight" Tile="creatures/sw_crow.bmp" DetailColor="c" BodyObject="PROMETHIA_SkylightBody">
+            <stat Name="Agility" Bonus="4" />
+            <stat Name="Toughness" Bonus="-1" />
+            <skills>
+              <skill Name="Acrobatics" />
+              <skill Name="Acrobatics_Jump" />
+              <skill Name="Rifles" />
+              <skill Name="Survival" />
+              <skill Name="Survival_SaltDesertSurvival" />
+            </skills>
+            <reputations>
+              <reputation With="Birds" Value="600" />
+            </reputations>
+            <extrainfo>{{B|Soaring high, the eyes of an ancient sect watch the world shift below them in abject disappointment.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Wirehand" Code="c" Gear="StartingGear_Wirehand" Tile="creatures/sw_snakelite.bmp" DetailColor="b" BodyObject="PROMETHIA_WirehandBody">
+            <stat Name="Agility" Bonus="1" />
+            <stat Name="Strength" Bonus="1" />
+            <stat Name="Intelligence" Bonus="1" />
+            <skills>
+              <skill Name="Tinkering" />
+              <skill Name="Tinkering_Disassemble" />
+              <skill Name="Tinkering_ReverseEngineer" />
+              <skill Name="Survival_RuinsSurvival" />
+            </skills>
+            <reputations>
+              <reputation With="Unshelled Reptiles" Value="600" />
+            </reputations>
+            <extrainfo>{{B|Remain cautious around ancient pipes and wires; you never know what dwells within, machinating.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Swampmarch" Code="d" Gear="StartingGear_Swampmarch" Tile="creatures/sw_giant_frog.bmp" DetailColor="g" BodyObject="PROMETHIA_SwampmarchBody">
+            <stat Name="Strength" Bonus="3" />
+            <skills>
+              <skill Name="Survival_SaltmarshSurvival" />
+              <skill Name="Endurance_PoisonTolerance" />
+              <skill Name="Cudgel" />
+              <skill Name="Cudgel_Bludgeon" />
+            </skills>
+            <reputations>
+              <reputation With="Frogs" Value="600" />
+            </reputations>
+            <extrainfo>{{B|In war, one must be prepared to fight in any environment, and the Tleila knew this well.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Watcher" Code="e" Gear="StartingGear_Watcher" Tile="creatures/sw_star_kraken.bmp" DetailColor="O" BodyObject="PROMETHIA_WatcherBody">
+            <stat Name="Intelligence" Bonus="3" />
+            <skills>
+              <skill Name="Customs" />
+              <skill Name="Dual_Wield" />
+              <skill Name="HeavyWeapons" />
+              <skill Name="Discipline" />
+            </skills>
+            <reputations>
+              <reputation With="Strangers" Value="600" />
+            </reputations>
+            <extrainfo>{{B|Creatures of differing magnitudes oft ignore one another; What better to spy on an enemy than a mountain of rocky flesh?}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Implacable" Code="f" Gear="StartingGear_Implacable" Tile="creatures/sw_amoeba.bmp" DetailColor="W" BodyObject="PROMETHIA_ImplacableBody">
+            <stat Name="Willpower" Bonus="4" />
+            <stat Name="Ego" Bonus="-1" />
+            <skills>
+              <skill Name="Discipline" />
+              <skill Name="Endurance" />
+              <skill Name="Discipline_IronMind" />
+              <skill Name="Cudgel" />
+            </skills>
+            <reputations>
+              <reputation With="Oozes" Value="600" />
+            </reputations>
+            <extrainfo>{{B|Of the Tleila's uniquely crafted legions, often the humble ooze was their most ferocious combatant.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Hunter-seeker" Code="g" Gear="StartingGear_Hunterseeker" Tile="creatures/sw_spider.bmp" DetailColor="r" BodyObject="PROMETHIA_HunterseekerBody">
+            <stat Name="Agility" Bonus="2" />
+            <stat Name="Strength" Bonus="1" />
+            <skills>
+              <skill Name="Customs_TrashDivining" />
+              <skill Name="ShortBlades" />
+              <skill Name="ShortBlades_Bloodletter" />
+              <skill Name="Acrobatics" />
+            </skills>
+            <reputations>
+              <reputation With="Arachnids" Value="600" />
+            </reputations>
+            <extrainfo>{{B|Rarely a target may escape the Tleila's forward assault. Never would it escape the hunter-seeker.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Shielded" Code="h" Gear="StartingGear_Shielded" Tile="creatures/sw_magmacrab.png" DetailColor="m" BodyObject="PROMETHIA_ShieldedBody">
+            <stat Name="Toughness" Bonus="3" />
+            <skills>
+              <skill Name="Endurance" />
+              <skill Name="Endurance_Swimming" />
+              <skill Name="Endurance_Weathered" />
+              <skill Name="Endurance_Calloused" />
+            </skills>
+            <reputations>
+              <reputation With="Crabs" Value="600" />
+            </reputations>
+            <extrainfo>{{B|Though the Tleila prefered infiltration or rapid assault to defensive positions, few would surpass the natural tenacity of their chitinous tanks.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Allhearing" Code="i" Gear="StartingGear_Allhearing" Tile="creatures/sw_mushroom.bmp" DetailColor="R" BodyObject="PROMETHIA_AllhearingBody">
+            <stat Name="Ego" Bonus="4" />
+            <stat Name="Willpower" Bonus="-1" />
+            <skills>
+              <skill Name="Persuasion" />
+              <skill Name="Persuasion_Intimidate" />
+              <skill Name="Persuasion_SnakeOiler" />
+              <skill Name="Persuasion_Proselytize" />
+            </skills>
+            <reputations>
+              <reputation With="Fungi" Value="600" />
+            </reputations>
+            <extrainfo>{{B|One of the most insidious aspects of the Tleila was their usage of psychological warfare, in which the Allhearing are masters.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Bushwack" Code="j" Gear="StartingGear_Bushwack" Tile="terrain/sw_tree_fuzzy_4.bmp" DetailColor="w" BodyObject="PROMETHIA_BushwackBody">
+            <stat Name="Strength" Bonus="4" />
+            <stat Name="Agility" Bonus="-1" />
+            <skills>
+              <skill Name="Axe" />
+              <skill Name="Axe_Cleave" />
+              <skill Name="Axe_HookAndDrag" />
+              <skill Name="Persuasion_Intimidate" />
+              <skill Name="Endurance_Calloused" />
+            </skills>
+            <reputations>
+              <reputation With="Trees" Value="600" />
+            </reputations>
+            <extrainfo>{{B|In an ambush, the average eater strategy might involve advanced cloaking technology. The Tleila knew better.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Trojan" Code="k" Gear="StartingGear_Trojan" Tile="items/ms_chairbear.png" DetailColor="w" BodyObject="PROMETHIA_TrojanBody">
+            <stat Name="Ego" Bonus="5" />
+            <stat Name="Strength" Bonus="-2" />
+            <stat Name="Toughness" Bonus="-2" />
+            <skills>
+              <skill Name="Cudgel" />
+              <skill Name="Persuasion_SnakeOiler" />
+              <skill Name="Customs" />
+              <skill Name="Rifles" />
+            </skills>
+            <reputations>
+              <reputation With="Bears" Value="600" /> 
+              <reputation With="Newly Sentient Beings" Value="600" />
+            </reputations>
+            <extrainfo>{{B|Infiltrating enemy ranks is an ancient practice, the Tleila hardly discovered it; but inflitrating enemy homes requires ingenuity.}}
+            </extrainfo>
+          </subtype>
+      
+          <subtype Name="Phalanx" Code="l" Gear="StartingGear_Phalanx" Tile="creatures/sw_snail.bmp" DetailColor="o" BodyObject="PROMETHIA_PhalanxBody">
+            <stat Name="Toughness" Bonus="2" />
+            <stat Name="Strength" Bonus="1" />
+            <skills>
+              <skill Name="Shield" />
+              <skill Name="Shield_DeftBlocking" />
+              <skill Name="LongBlades" />
+              <skill Name="Endurance_Calloused" />
+            </skills>
+            <reputations>
+              <reputation With="Mollusks" Value="600" />
+            </reputations>
+            <extrainfo>{{B|Though a lowly snail would be handily slain by conventional weaponry, an unstoppable wave of genetically engineered mollusks was a personal favorite tactic of {{m|High Vat-Seer Kleae}}}}
+            </extrainfo>
+          </subtype>
+          
+    </class>
+
+</subtypes>
