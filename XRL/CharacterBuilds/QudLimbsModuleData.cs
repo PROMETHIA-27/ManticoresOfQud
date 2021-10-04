@@ -60,6 +60,7 @@ namespace XRL.CharacterBuilds
             var tempPart = new BodyPart(part.Type, null);
             this.Type = tempPart.Type;
             this.VariantType = tempPart.VariantType;
+            this.DefaultBehavior = part.DefaultBehavior;
             this.Description = tempPart.Description;
             this.DescriptionPrefix = tempPart.DescriptionPrefix;
             this.Name = tempPart.Name;
@@ -89,7 +90,7 @@ namespace XRL.CharacterBuilds
             anatomyPart.DependsOn = this.DependsOn;
             anatomyPart.RequiresType = this.RequiresType;
             anatomyPart.RequiresType = partType.RequiresType;
-            anatomyPart.DefaultBehavior = partType.DefaultBehavior;
+            anatomyPart.DefaultBehavior = this.DefaultBehavior ?? partType.DefaultBehavior;
             anatomyPart.Category = partType.Category;
             anatomyPart.RequiresLaterality = partType.RequiresLaterality;
             anatomyPart.Mobility = partType.Mobility;
@@ -274,6 +275,8 @@ namespace XRL.CharacterBuilds
         public string SupportsDependent;
 
         public string DependsOn;
+
+        public string DefaultBehavior;
 		
 		public List<SimpleBodyPart> Parts;
     }
