@@ -16,4 +16,5 @@ Due to the complexity of the limb system in Qud, designing a body can have unexp
   - [D] means a limb is dependent, meaning it will be automatically removed if the imaginary limb platform it depends on is not supported.
   - [R] means requires part, which means a part will be automatically removed if all parts of a certain type are removed. [R] may involve laterality, but does not need to.
   - [I] means implied. An implied part will be automatically added to the body plan if the parts it is implied by are added. So far the only implied parts are pair of hands variations, and they are implied by 2 hands each.
+
 Beyond these rules, experiment with different body plans and find out how they affect gameplay and your usual gameplay strategies! [Github link](https://github.com/PROMETHIA-27/ManticoresOfQud)
