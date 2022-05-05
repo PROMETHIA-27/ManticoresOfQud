@@ -11,12 +11,6 @@ namespace XRL.CharacterBuilds.Qud
     [HasWishCommand]
     public class QudLimbsModule : EmbarkBuilderModule<QudLimbsModuleData>
     {
-        [WishCommand(Command = "updatebody")]
-        public static void UpdateBody()
-        {
-            The.Player.Body.UpdateBodyParts(0);
-        }
-
         public QudLimbsModule()
         {
             var partsDict = Anatomies.GetBodyPartTypeSelector(true, true, false, true, null, null, true);
