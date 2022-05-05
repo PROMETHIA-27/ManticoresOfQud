@@ -7,6 +7,7 @@ using XRL.World.Parts;
 using XRL.World;
 using XRL.World.Capabilities;
 using Newtonsoft.Json;
+using static System.Math;
 
 namespace XRL.CharacterBuilds 
 {
@@ -19,7 +20,7 @@ namespace XRL.CharacterBuilds
         public HashSet<SimpleBodyPart> implyingParts = new HashSet<SimpleBodyPart>();
 
         public int currentLimbPoints = XRL.CharacterBuilds.Qud.QudLimbsModule.BaseLimbPoints;
-        public int ToughnessPenalty => System.Math.Abs(System.Math.Min(0, currentLimbPoints));
+        public int ToughnessPenalty => Abs(Min(0, currentLimbPoints));
     }
 
     [Serializable]
