@@ -50,8 +50,8 @@ namespace XRL.CharacterBuilds.Qud
         /// Returns a warning string or null
         public override string DataWarnings()
         {
-            if (this.data.ToughnessPenalty > 0)
-                return "You have excessive limbs, and will incur a toughness penalty if you continue.";
+            // if (this.data.ToughnessPenalty > 0)
+            //     return "You have excessive limbs, and will incur a toughness penalty if you continue.";
             return null;
         }
 
@@ -62,7 +62,7 @@ namespace XRL.CharacterBuilds.Qud
         {
             if (id == QudGameBootModule.BOOTEVENT_BOOTPLAYEROBJECT && this.data != null)
             {
-                
+
             }
             return base.handleBootEvent(id, game, info, element);
         }
