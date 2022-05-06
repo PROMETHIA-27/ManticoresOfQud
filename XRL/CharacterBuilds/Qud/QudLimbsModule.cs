@@ -14,13 +14,11 @@ namespace XRL.CharacterBuilds.Qud
     {
         public QudLimbsModule()
         {
-            var partsDict = Anatomies.GetBodyPartTypeSelector(true, true, false, true, null, null, true);
-            foreach (var part in partsDict.Keys)
-                this.Limbs.Add(part);
-			foreach (var part in Anatomies.BodyPartTypeList)
-				if ((part.ImpliedBy ?? "") != "")
-					this.ImpliedLimbs.Add(part);
+            
         }
+
+        /// Must be overridden but I don't need it
+        public override void InitFromSeed(string seed) {}
 
         /// Whether or not this window will be shown
         public override bool shouldBeEnabled()
@@ -32,11 +30,6 @@ namespace XRL.CharacterBuilds.Qud
                 return subtypeModule != null && subtypeModule.data != null;
             }
             return false;
-        }
-
-        /// Eh? Gets a seed so probably good for randomizing some stuff. World seed maybe?
-        public override void InitFromSeed(string seed)
-        {
         }
 
         /// Allows choosing a specific window order be exposing the list of windows
@@ -69,38 +62,9 @@ namespace XRL.CharacterBuilds.Qud
         {
             if (id == QudGameBootModule.BOOTEVENT_BOOTPLAYEROBJECT && this.data != null)
             {
-                GameObject player = element as GameObject;
-                var newAnatomy = new Anatomy("Manticore");
-                newAnatomy.BodyType = player.Body.GetBody().Type;
-
-                foreach (var part in this.data.root.Parts)
-                {
-                    var anatomyPart = part.ToAnatomyPart();    
-                    newAnatomy.Parts.Add(anatomyPart);
-                }
                 
-                Anatomies.AnatomyTable.Add("Manticore", newAnatomy);
-                Anatomies.AnatomyList.Add(newAnatomy);
-
-                player.Body.Rebuild("Manticore");
-
-                Anatomies.AnatomyTable.Remove("Manticore");
-                Anatomies.AnatomyList.Remove(newAnatomy);
-
-                // TraverseAnatomyAndApplyChanges(this.data.root, player.Body.GetBody());
-
-                player.GetStat("Toughness").BaseValue -= this.data.ToughnessPenalty;
             }
             return base.handleBootEvent(id, game, info, element);
-        }
-
-        /// TODO: Remove this from this class. This is my own logic, and should be separated.
-        /// I believe this collects all different part types into a hashset.
-        public static void TraverseAnatomyPartsAndAddToSet(HashSet<AnatomyPart> set, AnatomyPart part)
-        {
-            set.Add(part);
-            for (int i = 0; i < part.Subparts.Count; i++)
-                TraverseAnatomyPartsAndAddToSet(set, part.Subparts[i]);
         }
 
         /// UI events, including of *other* windows.
