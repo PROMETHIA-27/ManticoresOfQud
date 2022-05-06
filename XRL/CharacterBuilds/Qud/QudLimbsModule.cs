@@ -71,13 +71,13 @@ namespace XRL.CharacterBuilds.Qud
         /// Each window likely has its own event list.
         public override object handleUIEvent(string id, object element)
         {
-            if (id == QudAttributesModuleWindow.EID_GET_BASE_ATTRIBUTES)
-            {
-                List<AttributeDataElement> source = element as List<AttributeDataElement>;
-                foreach (var attr in source)
-                    if (attr.Attribute == "Toughness")
-                        attr.Bonus -= this.data.ToughnessPenalty;
-            }
+            // if (id == QudAttributesModuleWindow.EID_GET_BASE_ATTRIBUTES)
+            // {
+            //     List<AttributeDataElement> source = element as List<AttributeDataElement>;
+            //     foreach (var attr in source)
+            //         if (attr.Attribute == "Toughness")
+            //             attr.Bonus -= this.data.ToughnessPenalty;
+            // }
             return base.handleUIEvent(id, element);
         }
 
