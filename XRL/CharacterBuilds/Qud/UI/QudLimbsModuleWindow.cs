@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using XRL.UI.Framework;
 using ConsoleLib.Console;
 using XRL.CharacterBuilds.UI;
@@ -17,8 +16,10 @@ using UnityEngine.Events;
 namespace XRL.CharacterBuilds.Qud.UI
 {
     [UIView("CharacterCreation:PickLimbs", false, false, false, null, null, false, 0, NavCategory = "Menu", UICanvas = "Chargen/PickLimbs", UICanvasHost = 1)]
+    /// The UI for the limbs module. Describes UI behavior.
     public class QudLimbsModuleWindow : EmbarkBuilderModuleWindowBase<QudLimbsModule>
     {
+        /// Important UI element
         public CategoryMenusScroller scroller => base.GetComponentInChildren<CategoryMenusScroller>();
 
         public QudLimbsModuleWindow()
@@ -113,6 +114,7 @@ namespace XRL.CharacterBuilds.Qud.UI
             };
         }
 
+        /// Provide menu bar at the bottom of the screen, with key bindings
         public override IEnumerable<MenuOption> GetKeyMenuBar()
         {
             showPoints.Description = this.module.data.currentLimbPoints >= 0 ? $"{{{{y|Points Remaining: {this.module.data.currentLimbPoints}}}}}" : $"{{{{R|Points Remaining: {this.module.data.currentLimbPoints}}}}}";
@@ -133,6 +135,7 @@ namespace XRL.CharacterBuilds.Qud.UI
             yield break;
         }
         
+        /// Respond to chosen menu options
         public override void HandleMenuOption(MenuOption menuOption)
         {
             if (menuOption.Id == "PickLimb")
@@ -153,11 +156,13 @@ namespace XRL.CharacterBuilds.Qud.UI
                 this.OptionChooseDependency(this.lastHighlightedButton);
         }
 
+        /// Provide navigation context (description of a smaller part of a larger screen)
         public override NavigationContext GetNavigationContext()
 		{
 			return this.scroller.scrollContext;
 		}
 
+        /// Provide breadcrumb (The UI Icon at the top)
         public override UIBreadcrumb GetBreadcrumb()
 		{
 			return new UIBreadcrumb
@@ -170,6 +175,7 @@ namespace XRL.CharacterBuilds.Qud.UI
 			};
 		}
 
+        /// TODO: Move this, custom logic
         string loadedBodyType = null;
         public override void BeforeShow(EmbarkBuilderModuleWindowDescriptor descriptor)
         {
@@ -205,6 +211,7 @@ namespace XRL.CharacterBuilds.Qud.UI
             base.BeforeShow(descriptor);
         }
 
+        /// TODO: Custom logic, remove
         public Dictionary<string, string> limbTiles = new Dictionary<string, string>();
         public void UpdateMenuOptions()
         {
@@ -257,6 +264,7 @@ namespace XRL.CharacterBuilds.Qud.UI
             this.GetOverlayWindow().UpdateMenuBars();
         }
 
+        /// TODO: Custom logic, remove
         HashSet<SimpleBodyPart> blacklist = new HashSet<SimpleBodyPart>();
         public void UpdatePartsWithRequirements()
         {

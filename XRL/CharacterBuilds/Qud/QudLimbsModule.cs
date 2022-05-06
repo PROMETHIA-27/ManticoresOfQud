@@ -9,6 +9,7 @@ using System.Linq;
 namespace XRL.CharacterBuilds.Qud
 {
     [HasWishCommand]
+    /// The logical backend of the chargen process module
     public class QudLimbsModule : EmbarkBuilderModule<QudLimbsModuleData>
     {
         public QudLimbsModule()
@@ -21,6 +22,7 @@ namespace XRL.CharacterBuilds.Qud
 					this.ImpliedLimbs.Add(part);
         }
 
+        /// Whether or not this window will be shown
         public override bool shouldBeEnabled()
         {
             var genotypeModule = this.builder.GetModule<QudGenotypeModule>();
@@ -32,21 +34,27 @@ namespace XRL.CharacterBuilds.Qud
             return false;
         }
 
+        /// Eh? Gets a seed so probably good for randomizing some stuff. World seed maybe?
         public override void InitFromSeed(string seed)
         {
         }
 
+        /// Allows choosing a specific window order be exposing the list of windows
         public override void assembleWindowDescriptors(List<EmbarkBuilderModuleWindowDescriptor> windows)
         {
             var idx = windows.FindIndex(w => w.viewID == "Chargen/ChooseSubtypes");
             windows.Insert(idx + 1, this.windows["Chargen/ChooseLimbs"]);
         }
 
+        /// Prevents you from moving forward in the chargen process if something is wrong
+        /// Returns a string explaining the error, or null
         public override string DataErrors()
         {
             return null;
         }
 
+        /// Warns you when moving forward in the chargen process if something is wrong
+        /// Returns a warning string or null
         public override string DataWarnings()
         {
             if (this.data.ToughnessPenalty > 0)
@@ -54,6 +62,9 @@ namespace XRL.CharacterBuilds.Qud
             return null;
         }
 
+        /// Event handling while booting. 
+        /// QudGameBootModule seems to have a list of event names, not sure if more exist.
+        /// element is potentially some associated data of the event.
         public override object handleBootEvent(string id, XRLGame game, EmbarkInfo info, object element = null)
         {
             if (id == QudGameBootModule.BOOTEVENT_BOOTPLAYEROBJECT && this.data != null)
@@ -83,6 +94,8 @@ namespace XRL.CharacterBuilds.Qud
             return base.handleBootEvent(id, game, info, element);
         }
 
+        /// TODO: Remove this from this class. This is my own logic, and should be separated.
+        /// I believe this collects all different part types into a hashset.
         public static void TraverseAnatomyPartsAndAddToSet(HashSet<AnatomyPart> set, AnatomyPart part)
         {
             set.Add(part);
@@ -90,16 +103,8 @@ namespace XRL.CharacterBuilds.Qud
                 TraverseAnatomyPartsAndAddToSet(set, part.Subparts[i]);
         }
 
-        // public static void TraverseAnatomyAndApplyChanges(SimpleBodyPart part, BodyPart bodyPart)
-        // {
-        //     // bodyPart.Name = part.Name;
-        //     // bodyPart.Description = part.Description;
-        //     // bodyPart.DescriptionPrefix = part.DescriptionPrefix; 
-
-        //     for (int i = 0; i < part.Parts.Count; i++)
-        //         TraverseAnatomyAndApplyChanges(part.Parts[i], bodyPart.Parts[i]);
-        // }
-
+        /// UI events, including of *other* windows.
+        /// Each window likely has its own event list.
         public override object handleUIEvent(string id, object element)
         {
             if (id == QudAttributesModuleWindow.EID_GET_BASE_ATTRIBUTES)
@@ -112,6 +117,7 @@ namespace XRL.CharacterBuilds.Qud
             return base.handleUIEvent(id, element);
         }
 
+        /// TODO: This is all my own logic, and is also data, should be moved somewhere else I think.
         public List<BodyPartType> Limbs = new List<BodyPartType>();
 		public List<BodyPartType> ImpliedLimbs = new List<BodyPartType>();
         public const int BaseLimbPoints = 16;

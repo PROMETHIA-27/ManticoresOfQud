@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using XRL.World.Parts;
 using XRL.World;
 using XRL.World.Capabilities;
-using Newtonsoft.Json;
 using static System.Math;
 
 namespace XRL.CharacterBuilds 
 {
+    /// Data storage for the module
     public class QudLimbsModuleData : AbstractEmbarkBuilderModuleData
     {
         public SimpleBodyPart root = new SimpleBodyPart(Anatomies.GetBodyPartTypeOrFail("Body"));
