@@ -1,162 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <populations>
     <population Name="StartingGear_Aquamarine">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="5" />
-            <object Blueprint="Plastifer Jerkin" Number="1" />
-            <object Blueprint="Dagger" Number="1" />
-            <table Name="#Injectors" Number="1d3-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Artifact 1" Number="1d2" />
-            <table Name="#Artifact 2" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Skylight">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="1" />
-            <object Blueprint="Leather Armor" Number="1" />
-            <object Blueprint="Desert Rifle" Number="1" />
-            <object Blueprint="Lead Slug" Number="10d8" />
-            <table Name="#Injectors" Number="1d3-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Artifact 1" Number="1d2" />
-            <table Name="#Artifact 2" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Wirehand">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="2" />
-            <object Blueprint="Leather Armor" Number="1" />
-            <object Blueprint="Dagger" Number="1" />
-            <table Name="#Injectors" Number="1d1-1" />
-            <table Name="#Cells" Number="1d2" />
-            <table Name="#Artifact 1" Number="1d2" />
-            <table Name="#Artifact 2" Number="1d2" />
-            <table Name="#Scrap 1" Number="1d2" />
-            <table Name="#Junk 1" Number="1d2" />
-        </group>
     </population>
 
     <population Name="StartingGear_Swampmarch">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="2" />
-            <object Blueprint="Plastifer Jerkin" Number="1" />
-            <object Blueprint="Steel Hammer" Number="1" />
-            <table Name="#Injectors" Number="1d3-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Artifact 1" Number="1d2" />
-            <table Name="#Artifact 2" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Watcher">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="4" />
-            <object Blueprint="Studded Leather Armor" Number="1" />
-            <object Blueprint="Flamethrower" Number="1" />
-            <table Name="#Injectors" Number="1d3-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Implacable">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="2" />
-            <object Blueprint="Steel Hammer" Number="1" />
-            <table Name="#Injectors" Number="1d3-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Artifact 1" Number="1d2" />
-            <table Name="#Artifact 2" Number="1d2" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Hunterseeker">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="3" />
-            <object Blueprint="Plastifer Jerkin" Number="1" />
-            <object Blueprint="Steel Dagger" Number="2" />
-            <table Name="#Injectors" Number="1d6-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Shielded">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="3" />
-            <object Blueprint="Steel Plate Mail" Number="1" />
-            <object Blueprint="Steel Battle Axe" Number="1" />
-            <table Name="#Injectors" Number="1d3-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Allhearing">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="1" />
-            <object Blueprint="Leather Armor" Number="1" />
-            <object Blueprint="Steel Dagger" Number="1" />
-            <table Name="#Injectors" Number="1d1-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Artifact 1" Number="1d3" />
-            <table Name="#Artifact 2" Number="1d4" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Bushwack">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="4" />
-            <object Blueprint="Leather Armor" Number="1" />
-            <object Blueprint="Steel Battle Axe" Number="2" />
-            <table Name="#Injectors" Number="1d5-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Trojan">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="1" />
-            <object Blueprint="Cloth Robe" Number="1" />
-            <object Blueprint="Steel Dagger" Number="1" />
-            <table Name="#Injectors" Number="1d1-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 
     <population Name="StartingGear_Phalanx">
-        <group Name="Items" Style="pickeach">
-            <table Name="StartingGear_Common" />
-            <object Blueprint="HalfFullWaterskin" Number="3" />
-            <object Blueprint="Steel Plate Mail" Number="1" />
-            <object Blueprint="Steel Shield" Number="1" />
-            <object Blueprint="Steel Long Sword" Number="1" />
-            <table Name="#Injectors" Number="1d1-1" />
-            <table Name="#Cells" Number="1d1" />
-            <table Name="#Artifact 1" Number="1d1" />
-            <table Name="#Artifact 2" Number="1d1" />
-            <table Name="#Junk 1" Number="1d4" />
-        </group>
     </population>
 </populations>
