@@ -21,18 +21,19 @@ namespace XRL.CharacterBuilds.Qud
         public override void InitFromSeed(string seed) {}
 
         /// Whether or not this window will be shown
+        /// Enabled if genotype is manticore and you've chosen a subtype
         public override bool shouldBeEnabled()
         {
             var genotypeModule = this.builder.GetModule<QudGenotypeModule>();
-            if (genotypeModule != null && genotypeModule.data != null && genotypeModule.data.Genotype == "Manticore")
+            if (genotypeModule?.data?.Genotype == "Manticore")
             {
                 var subtypeModule = this.builder.GetModule<QudSubtypeModule>();
-                return subtypeModule != null && subtypeModule.data != null;
+                return subtypeModule?.data != null;
             }
             return false;
         }
 
-        /// Allows choosing a specific window order be exposing the list of windows
+        /// Allows choosing a specific window order by exposing the list of windows
         public override void assembleWindowDescriptors(List<EmbarkBuilderModuleWindowDescriptor> windows)
         {
             var idx = windows.FindIndex(w => w.viewID == "Chargen/ChooseSubtypes");

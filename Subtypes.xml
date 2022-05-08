@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <subtypes>
 
-    <class ID="Purposes" ChargenTitle="choose purpose" SingularTitle="purpose" StatBoxDisplay="true">
+    <class ID="Crafts" ChargenTitle="choose purpose" SingularTitle="purpose" StatBoxDisplay="true">
 
         <subtype Name="Aquamarine" Code="a" Gear="StartingGear_Aquamarine" Tile="creatures/sw_glowfish.bmp" DetailColor="B" BodyObject="PROMETHIA_AquamarineBody">
             <stat Name="Agility" Bonus="3" />
