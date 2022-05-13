@@ -12,6 +12,7 @@ namespace PRM {
         /// The actual value. May be uninitialized if this is a None option
         /// </summary>
         T value;
+
         /// <summary>
         /// 0 if None, not 0 if Some
         /// </summary>
@@ -28,6 +29,8 @@ namespace PRM {
 
         /// <summary>
         /// Attempt to get the value from this option.
+        /// 
+        /// Throws if this is a None option.
         /// </summary>
         /// <returns>The value of this option.</returns>
         /// <exception cref="System.InvalidOperationException">Thrown if this option contains no value.</exception>
