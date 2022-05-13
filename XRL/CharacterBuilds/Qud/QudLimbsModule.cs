@@ -81,11 +81,6 @@ namespace XRL.CharacterBuilds.Qud
             // }
             return base.handleUIEvent(id, element);
         }
-
-        /// TODO: This is all my own logic, and is also data, should be moved somewhere else I think.
-        public List<BodyPartType> Limbs = new List<BodyPartType>();
-		public List<BodyPartType> ImpliedLimbs = new List<BodyPartType>();
-        public const int BaseLimbPoints = 16;
     }
 }
 

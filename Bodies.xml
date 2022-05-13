@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bodies>
+
+    <anatomies>
+        <anatomy Name="ManticoreBase">
+            <part Type="Back" />
+            <part Type="Missile Weapon" Laterality="Right" />
+            <part Type="Missile Weapon" Laterality="Left" />
+            <part Type="Hands" DependsOn="Hands" />
+        </anatomy>
+    </anatomies>
+
+</bodies>
