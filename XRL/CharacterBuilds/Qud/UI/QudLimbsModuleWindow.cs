@@ -57,5 +57,11 @@ namespace XRL.CharacterBuilds.Qud.UI
 				IconForegroundColor = ConsoleLib.Console.ColorUtility.ColorMap['y']
 			};
 		}
+
+        /// Called to update the window
+        public override void BeforeShow(EmbarkBuilderModuleWindowDescriptor descriptor)
+        {
+            base.BeforeShow(descriptor);
+        }
     }
 }
