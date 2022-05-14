@@ -12,6 +12,7 @@ using ConsoleLib.Console;
 using XRL.CharacterBuilds.UI;
 using UnityEngine;
 using UnityEngine.Events;
+using PRM;
 
 namespace XRL.CharacterBuilds.Qud.UI
 {
@@ -21,11 +22,6 @@ namespace XRL.CharacterBuilds.Qud.UI
     {
         /// Important UI element
         public CategoryMenusScroller scroller => base.GetComponentInChildren<CategoryMenusScroller>();
-
-        public QudLimbsModuleWindow()
-        {
-            
-        }
 
         /// Provide menu bar at the bottom of the screen, with key bindings
         // public override IEnumerable<MenuOption> GetKeyMenuBar()
@@ -61,15 +57,15 @@ namespace XRL.CharacterBuilds.Qud.UI
         /// Called to update the window
         public override void BeforeShow(EmbarkBuilderModuleWindowDescriptor descriptor)
         {
-            var categories = new List<CategoryMenuData>();
+            var categories = new List<CategoryMenuData>(1);
 
-            categories[0] = new CategoryMenuData() {
+            categories.Add(new CategoryMenuData() {
                 Title = "Limbs",
                 Description = "A bunch of limbs.",
                 menuOptions = new List<PrefixMenuOption>(),
-            };
-            
-            foreach (var archetype in this.module.data.AppendageArchetypes) {
+            });
+
+            foreach (var archetype in LimbArchetype.Appendages) {
                 var option = new PrefixMenuOption() {
                     Description = archetype.name,
                     LongDescription = archetype.isAppendage ? "This is an appendage!" : "This is not an appendage.",

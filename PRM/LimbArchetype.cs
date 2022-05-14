@@ -1,15 +1,43 @@
+using System.Collections.Immutable;
+using System.Linq;
+using XRL.World;
+
 namespace PRM {
     /// <summary>
     /// Represents an archetypal limb type, such as "Hand", "Head", or "Face".
     /// Does not include specialized limbs, such as "Hardpoint".
     /// </summary>
     public struct LimbArchetype {
+        /// <summary>
+        /// The name of the archetype, such as "Head" or "Hand"
+        /// </summary>
         public readonly string name;
+
+        /// <summary>
+        /// True if the part is an appendage (such as Hand, Head, Arm, or Feet)
+        /// False if the part is not an appendage (such as Body, Back, or Missile Weapon)
+        /// </summary>
         public readonly bool isAppendage;
 
         public LimbArchetype(string name, bool isAppendage) {
             this.name = name;
             this.isAppendage = isAppendage;
         }
+
+        static LimbArchetype() {
+            // Collect appendage archetypes
+            Appendages = 
+                (from part in Anatomies.BodyPartTypeList
+                where part.Appendage ?? false
+                where part.Type == part.FinalType // where part is not a variant
+                select new LimbArchetype(part.Type, true))
+                .ToImmutableArray();
+        }
+        
+        /// <summary>
+        /// A list of all limb archetypes with the Appendage tag. This excludes body and back,
+        /// as well as some abstract parts.
+        /// </summary>
+        public readonly static ImmutableArray<LimbArchetype> Appendages;
     }
 }

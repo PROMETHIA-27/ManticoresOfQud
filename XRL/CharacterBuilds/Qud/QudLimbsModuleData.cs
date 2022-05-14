@@ -1,12 +1,12 @@
 using System.Globalization;
 using System.Security;
-using System.Diagnostics;
 using System;
 using System.Collections.Generic;
 using XRL.World.Parts;
 using XRL.World;
 using XRL.World.Capabilities;
 using PRM;
+using UnityEngine;
 using static System.Math;
 
 namespace XRL.CharacterBuilds 
@@ -21,16 +21,13 @@ namespace XRL.CharacterBuilds
         /// </summary>
         public const int BASE_LIMB_POINTS = 16;
 
+        
+        public static List<LimbArchetype> AppendageArchetypes = new List<LimbArchetype>();
+
         /// <summary>
         /// The number of limb points the current chargen has left
         /// </summary>
         public int CurrentLimbPoints = BASE_LIMB_POINTS;
-
-        /// <summary>
-        /// A list of all limb archetypes with the Appendage tag. This excludes body and back,
-        /// as well as some abstract parts.
-        /// </summary>
-        public List<LimbArchetype> AppendageArchetypes = new List<LimbArchetype>();
 
         /// <summary>
         /// The anatomy tree of the current chargen.
