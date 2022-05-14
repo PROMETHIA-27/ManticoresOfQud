@@ -5,6 +5,7 @@ using XRL.Wish;
 using XRL.CharacterBuilds.Qud.UI;
 using System.Collections.Generic;
 using System.Linq;
+using PRM;
 
 namespace XRL.CharacterBuilds.Qud
 {
@@ -14,7 +15,13 @@ namespace XRL.CharacterBuilds.Qud
     {
         public QudLimbsModule()
         {
-            
+            foreach (var part in Anatomies.BodyPartTypeList) {
+                // If part is not a variant type
+                if (part.Type == part.FinalType) {
+                    var archetype = new LimbArchetype(part.Type, part.Appendage ?? false);
+                    this.data.AppendageArchetypes.Add(archetype);
+                }
+            }
         }
 
         /// Must be overridden but I don't need it

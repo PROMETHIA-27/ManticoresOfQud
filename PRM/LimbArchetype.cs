@@ -6,5 +6,10 @@ namespace PRM {
     public struct LimbArchetype {
         public readonly string name;
         public readonly bool isAppendage;
+
+        public LimbArchetype(string name, bool isAppendage) {
+            this.name = name;
+            this.isAppendage = isAppendage;
+        }
     }
 }

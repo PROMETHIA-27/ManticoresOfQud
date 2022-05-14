@@ -4,7 +4,7 @@ namespace PRM {
     /// <summary>
     /// Represents a value that may or may not exist. Can either be Some or None.
     /// 
-    /// Create a Some value with the constructor, or a None with the default constructor or default.
+    /// Create a Some value with the constructor, or a None with the default constructor or default keyword.
     /// </summary>
     /// <typeparam name="T">The type of the value that this option may contain.</typeparam>
     public struct Option<T> {

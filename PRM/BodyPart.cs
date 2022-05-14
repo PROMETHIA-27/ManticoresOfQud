@@ -5,7 +5,7 @@ namespace PRM {
     /// <summary>
     /// A struct representing a body part in the anatomy of a creachure
     /// </summary>
-    struct BodyPart {
+    public struct BodyPart {
         /// <summary>
         /// The name of this body part, e.g. "Tentacle" or "Right Hand"
         /// </summary>
@@ -56,7 +56,7 @@ namespace PRM {
         /// <summary>
         /// A tree structure that represents the anatomy of a creachure
         /// </summary>
-        struct Tree {
+        public struct Tree {
             /// <summary>
             /// An arena that stores all the body parts of this tree.
             /// Is assumed to always have at least one element, the root.

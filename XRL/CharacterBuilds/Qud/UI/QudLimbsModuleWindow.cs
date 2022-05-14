@@ -24,7 +24,7 @@ namespace XRL.CharacterBuilds.Qud.UI
 
         public QudLimbsModuleWindow()
         {
-
+            
         }
 
         /// Provide menu bar at the bottom of the screen, with key bindings
@@ -61,6 +61,24 @@ namespace XRL.CharacterBuilds.Qud.UI
         /// Called to update the window
         public override void BeforeShow(EmbarkBuilderModuleWindowDescriptor descriptor)
         {
+            var categories = new List<CategoryMenuData>();
+
+            categories[0] = new CategoryMenuData() {
+                Title = "Limbs",
+                Description = "A bunch of limbs.",
+                menuOptions = new List<PrefixMenuOption>(),
+            };
+            
+            foreach (var archetype in this.module.data.AppendageArchetypes) {
+                var option = new PrefixMenuOption() {
+                    Description = archetype.name,
+                    LongDescription = archetype.isAppendage ? "This is an appendage!" : "This is not an appendage.",
+                };
+                categories[0].menuOptions.Add(option);
+            }
+
+            this.scroller.BeforeShow(this.descriptor, categories);
+
             base.BeforeShow(descriptor);
         }
     }

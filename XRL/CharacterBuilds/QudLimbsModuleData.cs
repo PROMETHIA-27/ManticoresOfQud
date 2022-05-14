@@ -12,7 +12,7 @@ using static System.Math;
 namespace XRL.CharacterBuilds 
 {
     /// <summary>
-    /// Data storage for the module
+    /// Data storage for the limbs module
     /// </summary>
     public class QudLimbsModuleData : AbstractEmbarkBuilderModuleData
     {
@@ -27,14 +27,19 @@ namespace XRL.CharacterBuilds
         public int CurrentLimbPoints = BASE_LIMB_POINTS;
 
         /// <summary>
-        /// Possibly an escape hatch to spend more than 16 points. TODO: Decide if this is wanted
-        /// </summary>
-        public int ToughnessPenalty => Abs(Min(0, CurrentLimbPoints));
-
-        /// <summary>
         /// A list of all limb archetypes with the Appendage tag. This excludes body and back,
         /// as well as some abstract parts.
         /// </summary>
-        public List<LimbArchetype> AppendageArchetypes => new List<LimbArchetype>();
+        public List<LimbArchetype> AppendageArchetypes = new List<LimbArchetype>();
+
+        /// <summary>
+        /// The anatomy tree of the current chargen.
+        /// </summary>
+        public Option<PRM.BodyPart.Tree> AnatomyTree = new Option<PRM.BodyPart.Tree>();
+
+        /// <summary>
+        /// Possibly an escape hatch to spend more than 16 points. TODO: Decide if this is wanted
+        /// </summary>
+        public int ToughnessPenalty => Abs(Min(0, CurrentLimbPoints));
     }
 }
