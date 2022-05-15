@@ -5,7 +5,7 @@ using XRL.World;
 namespace PRM {
     /// <summary>
     /// Represents an archetypal limb type, such as "Hand", "Head", or "Face".
-    /// Does not include specialized limbs, such as "Hardpoint".
+    /// Does not include specialized limbs, such as "Hardpoint" or "Tentacle".
     /// </summary>
     public struct LimbArchetype {
         /// <summary>
@@ -24,20 +24,19 @@ namespace PRM {
             this.isAppendage = isAppendage;
         }
 
-        static LimbArchetype() {
-            // Collect appendage archetypes
-            Appendages = 
-                (from part in Anatomies.BodyPartTypeList
-                where part.Appendage ?? false
-                where part.Type == part.FinalType // where part is not a variant
-                select new LimbArchetype(part.Type, true))
-                .ToImmutableArray();
+        public override string ToString() {
+            return $"LimbArchetype {{ name: \"{this.name}\", isAppendage: {this.isAppendage} }}";
         }
         
         /// <summary>
         /// A list of all limb archetypes with the Appendage tag. This excludes body and back,
         /// as well as some abstract parts.
         /// </summary>
-        public readonly static ImmutableArray<LimbArchetype> Appendages;
+        public readonly static ImmutableArray<LimbArchetype> Appendages = 
+            (from part in Anatomies.BodyPartTypeList
+            where part.Appendage ?? false // where part has `Appendage="True"`
+            where part.Type == part.FinalType // where part is not a variant
+            select new LimbArchetype(part.Type, true))
+            .ToImmutableArray();
     }
 }

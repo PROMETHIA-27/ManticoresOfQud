@@ -4,7 +4,7 @@ namespace PRM {
     /// <summary>
     /// Represents a value that may or may not exist. Can either be Some or None.
     /// 
-    /// Create a Some value with the constructor, or a None with the default constructor or default keyword.
+    /// Create a Some value with the custom constructor, or a None with the default constructor or default keyword.
     /// </summary>
     /// <typeparam name="T">The type of the value that this option may contain.</typeparam>
     public struct Option<T> {
@@ -48,6 +48,13 @@ namespace PRM {
         /// <returns>True if Some, False if None.</returns>
         public bool IsSome() {
             return this.discriminant != 0;
+        }
+
+        public override string ToString()
+        {
+            return this.discriminant != 0
+                ? $"Some({this.value})"
+                : "None";
         }
     }
 }

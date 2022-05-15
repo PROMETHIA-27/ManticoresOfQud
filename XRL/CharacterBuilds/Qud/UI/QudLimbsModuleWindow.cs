@@ -1,3 +1,6 @@
+using PRM;
+using System.Collections.Immutable;
+using System.Collections.Generic;
 using System.Text;
 using XRL.UI;
 using XRL.UI.Framework;
@@ -12,31 +15,55 @@ namespace XRL.CharacterBuilds.Qud.UI
     public class QudLimbsModuleWindow : EmbarkBuilderModuleWindowBase<QudLimbsModule>
     {
         /// <summary>
+        /// A list of MenuOptions to be used in GetKeyMenuBar and HandleMenuOption
+        /// </summary>
+        static readonly ImmutableArray<MenuOption> menuBar = ImmutableArray.Create(
+            new MenuOption() {
+                Id = "AddLimb",
+                Description = "Add Appendage"
+            },
+            new MenuOption() { 
+                Id = "RemoveLimb",
+                Description = "Remove Appendage"
+            }
+        );
+
+        /// <summary>
         /// Important UI element, which contains the categories and elements of them
         /// </summary>
         public CategoryMenusScroller scroller => base.GetComponentInChildren<CategoryMenusScroller>();
 
+        /// <summary>
         /// Provide menu bar at the bottom of the screen, with key bindings
-        // public override IEnumerable<MenuOption> GetKeyMenuBar()
-        // {
-            
-        // }
+        /// </summary>
+        /// <returns></returns>
+        public override IEnumerable<MenuOption> GetKeyMenuBar() {
+            return menuBar;
+        }
         
         /// <summary>
         /// Respond to chosen menu options
         /// </summary>
         /// <param name="menuOption">Menu option to handle</param>
-        public override void HandleMenuOption(MenuOption menuOption)
-        {
-            
+        public override void HandleMenuOption(MenuOption menuOption) {
+            switch (menuOption.Id) {
+                case "AddLimb":
+                    var data = this.module.data;
+                    var tree = data.anatomyTree;
+                    data.anatomyTree = 
+                        tree.WithChildPart(tree.Root, new Option<int>(), "NewPartLol", new LimbArchetype("Hand", true));
+                    this.module.builder.RefreshActiveWindow();
+                    break;
+                case "RemoveLimb":
+                    break;
+            }
         }
 
         /// <summary>
         /// Provide navigation context (description of a smaller part of a larger screen)
         /// </summary>
         /// <returns>The current nav context of this window</returns>
-        public override NavigationContext GetNavigationContext()
-		{
+        public override NavigationContext GetNavigationContext() {
 			return this.scroller.scrollContext;
 		}
 
@@ -44,10 +71,8 @@ namespace XRL.CharacterBuilds.Qud.UI
         /// Provide breadcrumb (The UI Icon at the top)
         /// </summary>
         /// <returns>A UIBreadcrumb which will be displayed at the top of the screen</returns>
-        public override UIBreadcrumb GetBreadcrumb()
-		{
-			return new UIBreadcrumb
-			{
+        public override UIBreadcrumb GetBreadcrumb() {
+			return new UIBreadcrumb {
 				Id = base.GetType().FullName,
 				Title = "Limbs",
 				IconPath = "UI/sw_limbs.png",
@@ -60,8 +85,7 @@ namespace XRL.CharacterBuilds.Qud.UI
         /// Called to update the window
         /// </summary>
         /// <param name="descriptor">?</param>
-        public override void BeforeShow(EmbarkBuilderModuleWindowDescriptor descriptor)
-        {
+        public override void BeforeShow(EmbarkBuilderModuleWindowDescriptor descriptor) {
             var data = this.module.data;
             var category = this.module.data.menuData[0];
 

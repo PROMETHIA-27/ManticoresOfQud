@@ -17,11 +17,6 @@ namespace PRM {
         public readonly LimbArchetype archetype;
 
         /// <summary>
-        /// A unique identifier for this body part in the context of its parent tree
-        /// </summary>
-        readonly uint id;
-
-        /// <summary>
         /// The index of this body part in its tree's arena.
         /// Parts are stored in the tree arena with a None thisIdx;
         /// when a part is passed outside of the tree, it then has the thisIdx set to a value.
@@ -51,10 +46,9 @@ namespace PRM {
         /// <param name="thisIdx">Index of this body part in the tree's arena</param>
         /// <param name="parent">Optional index of this part's parent in the arena</param>
         /// <param name="children">Indices of this part's children in the arena</param>
-        BodyPart(string name, LimbArchetype archetype, uint id, Option<int> thisIdx, Option<int> parent, ImmutableArray<int> children) {
+        BodyPart(string name, LimbArchetype archetype, Option<int> thisIdx, Option<int> parent, ImmutableArray<int> children) {
             this.name = name;
             this.archetype = archetype;
-            this.id = id;
             this.thisIdx = thisIdx;
             this.parent = parent;
             this.children = children;
@@ -66,18 +60,24 @@ namespace PRM {
         public int NumChildren => children.Length;
 
         /// <summary>
-        /// Returns a hash of the part based on its ID.
-        /// Within a given tree, each part should have a unique hash.
+        /// Copy the part but replace the thisIdx field
         /// </summary>
-        /// <returns>The hash value of this part.</returns>
-        public override int GetHashCode()
+        /// <param name="thisIdx">The thisIdx value to place into the copy's field</param>
+        /// <returns>A copied body part with a new thisIdx field</returns>
+        BodyPart WithThisIdx(Option<int> thisIdx) => 
+            new BodyPart(this.name, this.archetype, thisIdx, this.parent, this.children);
+
+        /// <summary>
+        /// Copy the part but replace the children field
+        /// </summary>
+        /// <param name="children">The children value to place into the copy's field</param>
+        /// <returns>A copied body part with a new children field</returns>
+        BodyPart WithChildren(ImmutableArray<int> children) => 
+            new BodyPart(this.name, this.archetype, this.thisIdx, this.parent, children);
+
+        public override string ToString()
         {
-            // Adapted from https://stackoverflow.com/questions/664014/what-integer-hash-function-are-good-that-accepts-an-integer-hash-key
-            var x = this.id;
-            x = ((x >> 16) ^ x) * 0x45d9f3b;
-            x = ((x >> 16) ^ x) * 0x45d9f3b;
-            x = (x >> 16) ^ x;
-            return unchecked((int)x);
+            return $"BodyPart {{ name: \"{this.name}\", archetype: {this.archetype} }}";
         }
 
         /// <summary>
@@ -98,18 +98,11 @@ namespace PRM {
             readonly int partCount;
 
             /// <summary>
-            /// The next ID to give to a part.
-            /// Updated whenever adding parts.
-            /// </summary>
-            readonly uint nextId;
-
-            /// <summary>
             /// Internal tree constructor
             /// </summary>
-            Tree(ImmutableArray<Option<BodyPart>> partArena, int partCount, uint nextId) {
+            Tree(ImmutableArray<Option<BodyPart>> partArena, int partCount) {
                 this.partArena = partArena;
                 this.partCount = partCount;
-                this.nextId = nextId;
             }
             
             /// Construct a new BodyPart.Tree
@@ -119,11 +112,10 @@ namespace PRM {
             /// <returns>A tree with one element, the root, which is assumed, but not
             /// enforced, to be a body and the first element of the underlying part arena.</returns>
             public Tree(string rootName, LimbArchetype rootArchetype) {
-                var root = new BodyPart(rootName, rootArchetype, 0, new Option<int>(), new Option<int>(), ImmutableArray<int>.Empty);
+                var root = new BodyPart(rootName, rootArchetype, new Option<int>(), new Option<int>(), ImmutableArray<int>.Empty);
 
                 this.partArena = ImmutableArray.Create(new Option<BodyPart>(root));
                 this.partCount = 1;
-                this.nextId = 1;
             }
 
             /// <summary>
@@ -131,11 +123,13 @@ namespace PRM {
             /// of the underlying part arena of the tree
             /// </summary>
             /// <returns></returns>
-            public BodyPart Root() {
-                var part = this.partArena[0];
-                if (part.IsSome())
-                    return part.Unwrap();
-                else throw new System.InvalidOperationException("Body tree has no root element!");
+            public BodyPart Root {
+                get {
+                    var part = this.partArena[0];
+                    if (part.IsSome())
+                        return part.Unwrap().WithThisIdx(new Option<int>(0));
+                    else throw new System.InvalidOperationException("Body tree has no root element!");
+                }
             }
 
             /// <summary>
@@ -150,16 +144,7 @@ namespace PRM {
                     if (!arenaPart.IsSome())
                         throw new System.InvalidOperationException("Failed to acquire part, body tree is invalid!");
 
-                    var p = arenaPart.Unwrap();
-
-                    return new BodyPart(
-                        p.name, 
-                        p.archetype, 
-                        p.id, 
-                        new Option<int>(index), 
-                        p.parent, 
-                        p.children
-                    );
+                    return arenaPart.Unwrap().WithThisIdx(new Option<int>(index));
                 }
             }
 
@@ -176,30 +161,33 @@ namespace PRM {
             /// <returns>A new tree containing the new child part</returns>
             public Tree WithChildPart(BodyPart parent, Option<int> childIdx, string childName, LimbArchetype childArchetype) {
                 if (!parent.thisIdx.IsSome())
-                    throw new System.InvalidOperationException("Passed in BodyPart lacks a .thisIdx!");
+                    throw new System.ArgumentException("Passed in BodyPart lacks a .thisIdx!");
 
                 var childArenaIdx = this.partArena.Length;
-                var child = new BodyPart(childName, childArchetype, this.nextId, new Option<int>(), parent.thisIdx, ImmutableArray<int>.Empty);
+                var child = new BodyPart(childName, childArchetype, new Option<int>(), parent.thisIdx, ImmutableArray<int>.Empty);
 
-                var childList = childIdx.IsSome() ? parent.children.Insert(childIdx.Unwrap(), childArenaIdx) : parent.children.Add(childArenaIdx);
-                var newParent = new BodyPart(parent.name, parent.archetype, parent.id, new Option<int>(), parent.parent, childList);
+                var childList = childIdx.IsSome() 
+                    ? parent.children.Insert(childIdx.Unwrap(), childArenaIdx) 
+                    : parent.children.Add(childArenaIdx);
+                var newParent = parent.WithThisIdx(new Option<int>()).WithChildren(childList);
 
                 var arenaBuilder = this.partArena.ToBuilder();
-                if (this.partCount < this.partArena.Length) 
+                if (this.partCount < this.partArena.Length) {
                     // If there are nones, find one and use it instead of appending
                     for (int i = 1; i < this.partArena.Length; i++)
                         if (!this.partArena[i].IsSome()) {
                             arenaBuilder[i] = new Option<BodyPart>(child);
                             break;
                         }
-                else 
+                } else
                     // Otherwise, just append
                     arenaBuilder.Add(new Option<BodyPart>(child));
+                
                 // Update parent
                 arenaBuilder[parent.thisIdx.Unwrap()] = new Option<BodyPart>(newParent);
                 var arena = arenaBuilder.ToImmutable();
 
-                return new Tree(arena, this.partCount + 1, this.nextId + 1);
+                return new Tree(arena, this.partCount + 1);
             }
 
             /// <summary>
@@ -211,7 +199,7 @@ namespace PRM {
             /// <exception cref="System.InvalidOperationException">Throws if the part is the root of the tree.</exception>
             public Tree WithoutPart(BodyPart part) {
                 if (!part.thisIdx.IsSome())
-                    throw new System.InvalidOperationException("Passed in BodyPart lacks a .thisIdx!");
+                    throw new System.ArgumentException("Passed in BodyPart lacks a .thisIdx!");
 
                 var builder = this.partArena.ToBuilder();
 
@@ -219,7 +207,7 @@ namespace PRM {
                     // Remove part from its parent
                     var parent = builder[part.parent.Unwrap()].Unwrap();
                     var newChildren = parent.children.Remove(part.thisIdx.Unwrap());
-                    var newParent = new BodyPart(parent.name, parent.archetype, parent.id, parent.thisIdx, parent.parent, newChildren);
+                    var newParent = parent.WithChildren(newChildren);
                     builder[part.parent.Unwrap()] = new Option<BodyPart>(newParent);
                 } 
                 else throw new System.InvalidOperationException($"Attempted to remove the root of a {nameof(PRM.BodyPart.Tree)}!");
@@ -242,7 +230,7 @@ namespace PRM {
                 }
 
                 var arena = builder.ToImmutable();
-                return new Tree(arena, this.partCount - removed, this.nextId);
+                return new Tree(arena, this.partCount - removed);
             }
 
             /// <summary>
@@ -260,9 +248,8 @@ namespace PRM {
 
                     fn(current, depth);
 
-                    for (int i = current.NumChildren - 1; i >= 0; i--) {
+                    for (int i = current.NumChildren - 1; i >= 0; i--)
                         stack.Push((current.children[i], depth + 1));
-                    }
                 }
             }
         }

@@ -36,19 +36,17 @@ namespace XRL.CharacterBuilds
         /// <summary>
         /// A list of categories to be used in the UI.
         /// </summary>
-        public List<CategoryMenuData> menuData = new List<CategoryMenuData>(); 
+        public List<CategoryMenuData> menuData = new List<CategoryMenuData>() {
+            new CategoryMenuData() {
+                Title = "Manticore Anatomy",
+                Description = "Build-a-Creature",
+                menuOptions = new List<PrefixMenuOption>()
+            }
+        }; 
 
         /// <summary>
         /// Pool of PrefixMenuOptions, to avoid constant re-alloc.
         /// </summary>
         public Pool<PrefixMenuOption> prefixOptionPool = new Pool<PrefixMenuOption>(12);
-
-        public QudLimbsModuleData() {
-            this.menuData.Add(new CategoryMenuData() {
-                Title = "Manticore Anatomy",
-                Description = "Build-a-Creature",
-                menuOptions = new List<PrefixMenuOption>()
-            });
-        }
     }
 }

@@ -20,9 +20,8 @@ namespace PRM {
         /// <param name="initialCount">The number of default elements to fill the pool with.</param>
         public Pool(int initialCount) {
             this.stack = new Stack<T>(initialCount);
-            for (int i = 0; i < initialCount; i++) {
+            for (int i = 0; i < initialCount; i++)
                 this.stack.Push(new T());
-            }
         }
 
         /// <summary>
@@ -30,11 +29,8 @@ namespace PRM {
         /// </summary>
         /// <returns>A new element, filled with potentially garbage data.</returns>
         public T Take() {
-            if (this.stack.Count > 0) {
-                return this.stack.Pop();
-            } else {
-                return new T();
-            }
+            if (this.stack.Count > 0) return this.stack.Pop();
+            else return new T();
         }
 
         /// <summary>
