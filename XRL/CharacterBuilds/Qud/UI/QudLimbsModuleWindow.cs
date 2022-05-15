@@ -1,26 +1,19 @@
-using XRL.UI;
-using XRL.World;
-using XRL.World.Parts;
-using XRL.World.Capabilities;
-using Qud.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using XRL.UI;
 using XRL.UI.Framework;
-using ConsoleLib.Console;
 using XRL.CharacterBuilds.UI;
-using UnityEngine;
-using UnityEngine.Events;
-using PRM;
 
 namespace XRL.CharacterBuilds.Qud.UI
 {
     [UIView("CharacterCreation:PickLimbs", false, false, false, null, null, false, 0, NavCategory = "Menu", UICanvas = "Chargen/PickLimbs", UICanvasHost = 1)]
+    /// <summary>
     /// The UI for the limbs module. Describes UI behavior.
+    /// </summary>
     public class QudLimbsModuleWindow : EmbarkBuilderModuleWindowBase<QudLimbsModule>
     {
-        /// Important UI element
+        /// <summary>
+        /// Important UI element, which contains the categories and elements of them
+        /// </summary>
         public CategoryMenusScroller scroller => base.GetComponentInChildren<CategoryMenusScroller>();
 
         /// Provide menu bar at the bottom of the screen, with key bindings
@@ -29,19 +22,28 @@ namespace XRL.CharacterBuilds.Qud.UI
             
         // }
         
+        /// <summary>
         /// Respond to chosen menu options
+        /// </summary>
+        /// <param name="menuOption">Menu option to handle</param>
         public override void HandleMenuOption(MenuOption menuOption)
         {
             
         }
 
+        /// <summary>
         /// Provide navigation context (description of a smaller part of a larger screen)
+        /// </summary>
+        /// <returns>The current nav context of this window</returns>
         public override NavigationContext GetNavigationContext()
 		{
 			return this.scroller.scrollContext;
 		}
 
+        /// <summary>
         /// Provide breadcrumb (The UI Icon at the top)
+        /// </summary>
+        /// <returns>A UIBreadcrumb which will be displayed at the top of the screen</returns>
         public override UIBreadcrumb GetBreadcrumb()
 		{
 			return new UIBreadcrumb
@@ -54,26 +56,32 @@ namespace XRL.CharacterBuilds.Qud.UI
 			};
 		}
 
+        /// <summary>
         /// Called to update the window
+        /// </summary>
+        /// <param name="descriptor">?</param>
         public override void BeforeShow(EmbarkBuilderModuleWindowDescriptor descriptor)
         {
-            var categories = new List<CategoryMenuData>(1);
+            var data = this.module.data;
+            var category = this.module.data.menuData[0];
 
-            categories.Add(new CategoryMenuData() {
-                Title = "Limbs",
-                Description = "A bunch of limbs.",
-                menuOptions = new List<PrefixMenuOption>(),
+            foreach (var option in category.menuOptions)
+                data.prefixOptionPool.Return(option);
+            category.menuOptions.Clear();
+
+            data.anatomyTree.MapPartsPreorder((part, depth) => {
+                var prefixOption = data.prefixOptionPool.Take();
+                prefixOption.Description = $"[{part.archetype.name}] {part.name}";
+                prefixOption.Prefix = 
+                    new StringBuilder()
+                    .Append(' ', depth * 2)
+                    .ToString();
+                prefixOption.LongDescription = $"A piece of you.";
+
+                category.menuOptions.Add(prefixOption);
             });
 
-            foreach (var archetype in LimbArchetype.Appendages) {
-                var option = new PrefixMenuOption() {
-                    Description = archetype.name,
-                    LongDescription = archetype.isAppendage ? "This is an appendage!" : "This is not an appendage.",
-                };
-                categories[0].menuOptions.Add(option);
-            }
-
-            this.scroller.BeforeShow(this.descriptor, categories);
+            this.scroller.BeforeShow(this.descriptor, data.menuData);
 
             base.BeforeShow(descriptor);
         }

@@ -1,15 +1,7 @@
-using XRL.World;
-using XRL.World.Parts;
-using XRL.Wish;
-using XRL.CharacterBuilds.Qud.UI;
 using System.Collections.Generic;
-using System.Linq;
-using PRM;
-using UnityEngine;
 
 namespace XRL.CharacterBuilds.Qud
 {
-    [HasWishCommand]
     /// <summary>
     /// The logical backend of the chargen process module
     /// </summary>
