@@ -271,6 +271,26 @@ namespace PRM {
                         stack.Push((current.children[i], depth + 1));
                 }
             }
+
+            /// <summary>
+            /// Iterate over the children of a part
+            /// </summary>
+            /// <param name="part">the part to iterate the children of</param>
+            /// <returns>An IEnumerable which can be used in a foreach loop</returns>
+            public IEnumerable<BodyPart> ChildrenOf(BodyPart part) {
+                for (int i = 0; i < part.NumChildren; i++)
+                    yield return this.partArena[part.children[i]].Unwrap();
+            }
+
+            /// <summary>
+            /// Like ChildrenOf, but with the order reversed.
+            /// </summary>
+            /// <param name="part">The part to iterate the children of in reverse</param>
+            /// <returns>An IEnumerable which can be used in a foreach loop</returns>
+            public IEnumerable<BodyPart> ReverseChildrenOf(BodyPart part) {
+                for (int i = part.NumChildren; i >= 0; i--)
+                    yield return this.partArena[part.children[i]].Unwrap();
+            }
         }
     }
 }

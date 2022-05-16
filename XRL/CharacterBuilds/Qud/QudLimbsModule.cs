@@ -19,11 +19,9 @@ namespace XRL.CharacterBuilds.Qud
         /// Enabled if genotype is manticore and you've chosen a subtype.
         /// </summary>
         /// <returns>True if should be enabled, false if not</returns>
-        public override bool shouldBeEnabled()
-        {
+        public override bool shouldBeEnabled() {
             var genotypeModule = this.builder.GetModule<QudGenotypeModule>();
-            if (genotypeModule?.data?.Genotype == "Manticore")
-            {
+            if (genotypeModule?.data?.Genotype == "Manticore") {
                 var subtypeModule = this.builder.GetModule<QudSubtypeModule>();
                 return subtypeModule?.data != null;
             }
@@ -34,8 +32,7 @@ namespace XRL.CharacterBuilds.Qud
         /// Allows choosing a specific window order by exposing the list of windows
         /// </summary>
         /// <param name="windows">Current list of ordered window descriptors</param>
-        public override void assembleWindowDescriptors(List<EmbarkBuilderModuleWindowDescriptor> windows)
-        {
+        public override void assembleWindowDescriptors(List<EmbarkBuilderModuleWindowDescriptor> windows) {
             var idx = windows.FindIndex(w => w.viewID == "Chargen/ChooseSubtypes");
             windows.Insert(idx + 1, this.windows["Chargen/ChooseLimbs"]);
         }
@@ -44,8 +41,7 @@ namespace XRL.CharacterBuilds.Qud
         /// Prevents you from moving forward in the chargen process if something is wrong
         /// </summary>
         /// <returns>A string explaining the error, or null</returns>
-        public override string DataErrors()
-        {
+        public override string DataErrors() {
             return null;
         }
 
@@ -53,8 +49,7 @@ namespace XRL.CharacterBuilds.Qud
         /// Warns you when moving forward in the chargen process if something is wrong
         /// </summary>
         /// <returns>A warning string or null</returns>
-        public override string DataWarnings()
-        {
+        public override string DataWarnings() {
             // if (this.data.ToughnessPenalty > 0)
             //     return "You have excessive limbs, and will incur a toughness penalty if you continue.";
             return null;
@@ -69,11 +64,13 @@ namespace XRL.CharacterBuilds.Qud
         /// <param name="info">Current embark info</param>
         /// <param name="element">Either null or associated data of the event</param>
         /// <returns>element, usually</returns>
-        public override object handleBootEvent(string id, XRLGame game, EmbarkInfo info, object element = null)
-        {
-            if (id == QudGameBootModule.BOOTEVENT_BOOTPLAYEROBJECT && this.data != null)
-            {
+        public override object handleBootEvent(string id, XRLGame game, EmbarkInfo info, object element = null) {
+            if (id == QudGameBootModule.BOOTEVENT_BOOTPLAYEROBJECT && this.enabled) {
+                XRL.World.GameObject player = element as XRL.World.GameObject;
 
+                var anatomy = ConstructAnatomy(this.data.anatomyTree);
+                XRL.World.Anatomies.AnatomyTable["CustomManticore"] = anatomy;
+                player.Body.Rebuild("CustomManticore");
             }
             return base.handleBootEvent(id, game, info, element);
         }
@@ -85,8 +82,7 @@ namespace XRL.CharacterBuilds.Qud
         /// <param name="id">ID of the event</param>
         /// <param name="element">associated data</param>
         /// <returns>element, usually</returns>
-        public override object handleUIEvent(string id, object element)
-        {
+        public override object handleUIEvent(string id, object element) {
             // if (id == QudAttributesModuleWindow.EID_GET_BASE_ATTRIBUTES)
             // {
             //     List<AttributeDataElement> source = element as List<AttributeDataElement>;
@@ -118,6 +114,34 @@ namespace XRL.CharacterBuilds.Qud
         /// <param name="part">The part to remove</param>
         public void RemoveLimb(BodyPart part) {
             this.data.anatomyTree = this.data.anatomyTree.WithoutPart(part);
+        }
+
+        /// <summary>
+        /// Use a body tree to construct a new anatomy for the manticore
+        /// </summary>
+        /// <param name="tree">The tree to construct an anatomy from</param>
+        /// <returns>A new Anatomy object</returns>
+        static World.Anatomy ConstructAnatomy(BodyPart.Tree tree) {
+            var anatomy = new World.Anatomy("CustomManticore");
+            var stack = new Stack<(List<World.AnatomyPart>, BodyPart)>();
+            
+            foreach (var child in tree.ReverseChildrenOf(tree.Root)) {
+                var anatomyPart = new World.AnatomyPart(World.Anatomies.GetBodyPartType(child.archetype.name));
+                
+                stack.Push((anatomy.Parts, child));
+            }
+
+            while (stack.Count > 0) {
+                var (list, part) = stack.Pop();
+                var anatomyPart = new World.AnatomyPart(World.Anatomies.GetBodyPartType(part.archetype.name));
+
+                list.Add(anatomyPart);
+
+                foreach (var child in tree.ReverseChildrenOf(part))
+                    stack.Push((anatomyPart.Subparts, child));
+            }
+
+            return anatomy;
         }
     }
 }
