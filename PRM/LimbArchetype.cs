@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Immutable;
 using System.Linq;
 using XRL.World;
@@ -7,7 +8,7 @@ namespace PRM {
     /// Represents an archetypal limb type, such as "Hand", "Head", or "Face".
     /// Does not include specialized limbs, such as "Hardpoint" or "Tentacle".
     /// </summary>
-    public struct LimbArchetype {
+    public struct LimbArchetype : IEquatable<LimbArchetype> {
         /// <summary>
         /// The name of the archetype, such as "Head" or "Hand"
         /// </summary>
@@ -27,7 +28,13 @@ namespace PRM {
         public override string ToString() {
             return $"LimbArchetype {{ name: \"{this.name}\", isAppendage: {this.isAppendage} }}";
         }
-        
+
+        public bool Equals(LimbArchetype other)
+        {
+            return this.name == other.name &&
+                   this.isAppendage == other.isAppendage;
+        }
+
         /// <summary>
         /// A list of all limb archetypes with the Appendage tag. This excludes body and back,
         /// as well as some abstract parts.

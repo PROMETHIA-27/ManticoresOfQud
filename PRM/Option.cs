@@ -57,4 +57,12 @@ namespace PRM {
                 : "None";
         }
     }
+
+    public static class OptionExt {
+        public static bool Equals<T>(this Option<T> self, Option<T> other) where T : IEquatable<T> {
+            return 
+                (!self.IsSome() && !other.IsSome()) ||
+                (self.Unwrap().Equals(other.Unwrap()));
+        }
+    }
 }

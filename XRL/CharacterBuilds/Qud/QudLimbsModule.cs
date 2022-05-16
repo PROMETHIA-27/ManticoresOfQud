@@ -1,3 +1,4 @@
+using PRM;
 using System.Collections.Generic;
 
 namespace XRL.CharacterBuilds.Qud
@@ -96,7 +97,29 @@ namespace XRL.CharacterBuilds.Qud
             return base.handleUIEvent(id, element);
         }
 
+        /// <summary>
+        /// Set the default value for data, since it normally defaults to null and that's annoying
+        /// </summary>
         public override AbstractEmbarkBuilderModuleData DefaultData => new QudLimbsModuleData();
+
+        /// <summary>
+        /// Add a limb as a child of the given part
+        /// </summary>
+        /// <param name="part">The parent part</param>
+        public void AddLimb(BodyPart part) {
+            var data = this.data;
+            var tree = data.anatomyTree;
+            data.anatomyTree = 
+                tree.WithChildPart(part, new Option<int>(), "NewPartLol", new LimbArchetype("Hand", true));
+        }
+
+        /// <summary>
+        /// Remove a limb from the body tree, as well as its children.
+        /// </summary>
+        /// <param name="part">The part to remove</param>
+        public void RemoveLimb(BodyPart part) {
+            this.data.anatomyTree = this.data.anatomyTree.WithoutPart(part);
+        }
     }
 }
 

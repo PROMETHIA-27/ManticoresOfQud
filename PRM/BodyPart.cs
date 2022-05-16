@@ -1,11 +1,12 @@
 using System.Collections.Immutable;
 using System.Collections.Generic;
+using System;
 
 namespace PRM {
     /// <summary>
     /// A struct representing a body part in the anatomy of a creachure
     /// </summary>
-    public struct BodyPart {
+    public struct BodyPart : IEquatable<BodyPart> {
         /// <summary>
         /// The name of this body part, e.g. "Tentacle" or "Right Hand"
         /// </summary>
@@ -77,7 +78,16 @@ namespace PRM {
 
         public override string ToString()
         {
-            return $"BodyPart {{ name: \"{this.name}\", archetype: {this.archetype} }}";
+            return $"BodyPart {{ name: \"{this.name}\", archetype: {this.archetype}, NumChildren: {this.NumChildren} }}";
+        }
+
+        public bool Equals(BodyPart other)
+        {
+            return this.name == other.name &&
+                   this.archetype.Equals(other.archetype) &&
+                   this.thisIdx.Equals(other.thisIdx) && 
+                   this.parent.Equals(other.parent) &&
+                   this.children == other.children;
         }
 
         /// <summary>
@@ -163,7 +173,22 @@ namespace PRM {
                 if (!parent.thisIdx.IsSome())
                     throw new System.ArgumentException("Passed in BodyPart lacks a .thisIdx!");
 
-                var childArenaIdx = this.partArena.Length;
+                int childArenaIdx;
+                if (this.partCount < this.partArena.Length) {
+                    // If there are empty slots, find one and use it instead of appending
+                    // This is inefficient but there will never be a significant number of elements
+                    // so idc
+                    for (int i = 1; i < this.partArena.Length; i++)
+                        if (!this.partArena[i].IsSome()) {
+                            childArenaIdx = i;
+                            goto GotIndex;
+                        }
+                    throw new InvalidOperationException("Failed to acquire None, arena is invalid!");
+                } else
+                    childArenaIdx = this.partArena.Length;
+
+                GotIndex:
+
                 var child = new BodyPart(childName, childArchetype, new Option<int>(), parent.thisIdx, ImmutableArray<int>.Empty);
 
                 var childList = childIdx.IsSome() 
@@ -172,16 +197,10 @@ namespace PRM {
                 var newParent = parent.WithThisIdx(new Option<int>()).WithChildren(childList);
 
                 var arenaBuilder = this.partArena.ToBuilder();
-                if (this.partCount < this.partArena.Length) {
-                    // If there are nones, find one and use it instead of appending
-                    for (int i = 1; i < this.partArena.Length; i++)
-                        if (!this.partArena[i].IsSome()) {
-                            arenaBuilder[i] = new Option<BodyPart>(child);
-                            break;
-                        }
-                } else
-                    // Otherwise, just append
+                if (childArenaIdx == this.partArena.Length)
                     arenaBuilder.Add(new Option<BodyPart>(child));
+                else
+                    arenaBuilder[childArenaIdx] = new Option<BodyPart>(child);
                 
                 // Update parent
                 arenaBuilder[parent.thisIdx.Unwrap()] = new Option<BodyPart>(newParent);
@@ -242,14 +261,21 @@ namespace PRM {
 
                 stack.Push((0, 0));
 
+                UnityEngine.Debug.Log("Starting map! Current arena:");
+                foreach (var part in this.partArena)
+                    UnityEngine.Debug.Log($"  {part}");
+
                 while (stack.Count > 0) {
                     var (currIdx, depth) = stack.Pop();
-                    var current = this.partArena[currIdx].Unwrap();
+                    var current = this.partArena[currIdx].Unwrap().WithThisIdx(new Option<int>(currIdx));
+                    UnityEngine.Debug.Log("Got part while mapping!");
 
                     fn(current, depth);
 
-                    for (int i = current.NumChildren - 1; i >= 0; i--)
+                    for (int i = current.NumChildren - 1; i >= 0; i--) {
+                        UnityEngine.Debug.Log($"Getting child {i}, a.k.a. index {current.children[i]}!");
                         stack.Push((current.children[i], depth + 1));
+                    }
                 }
             }
         }

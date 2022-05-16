@@ -1,4 +1,3 @@
-
 using PRM;
 using System.Collections.Generic;
 using XRL.CharacterBuilds.UI;
@@ -48,5 +47,16 @@ namespace XRL.CharacterBuilds
         /// Pool of PrefixMenuOptions, to avoid constant re-alloc.
         /// </summary>
         public Pool<PrefixMenuOption> prefixOptionPool = new Pool<PrefixMenuOption>(12);
+
+        /// <summary>
+        /// A mapping of PrefixMenuOptions to BodyParts, to be able to retrieve a given part from 
+        /// a selected option.
+        /// </summary>
+        public Dictionary<PrefixMenuOption, BodyPart> optionPartMap = new Dictionary<PrefixMenuOption, BodyPart>(12);
+
+        /// <summary>
+        /// The last selected body part, or none if nothing is selected.
+        /// </summary>
+        public Option<BodyPart> selectedPart = new Option<BodyPart>();
     }
 }
