@@ -106,11 +106,10 @@ namespace XRL.CharacterBuilds.Qud
         /// Add a limb as a child of the given part
         /// </summary>
         /// <param name="part">The parent part</param>
-        public void AddLimb(BodyPart part) {
+        public void AddLimb(BodyPart part, LimbArchetype archetype, string name) {
             var data = this.data;
             var tree = data.anatomyTree;
-            data.anatomyTree = 
-                tree.WithChildPart(part, new Option<int>(), "NewPartLol", new LimbArchetype("Hand", true));
+            data.anatomyTree = tree.WithChildPart(part, new Option<int>(), name, archetype);
         }
 
         /// <summary>

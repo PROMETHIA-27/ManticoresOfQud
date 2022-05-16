@@ -261,21 +261,14 @@ namespace PRM {
 
                 stack.Push((0, 0));
 
-                UnityEngine.Debug.Log("Starting map! Current arena:");
-                foreach (var part in this.partArena)
-                    UnityEngine.Debug.Log($"  {part}");
-
                 while (stack.Count > 0) {
                     var (currIdx, depth) = stack.Pop();
                     var current = this.partArena[currIdx].Unwrap().WithThisIdx(new Option<int>(currIdx));
-                    UnityEngine.Debug.Log("Got part while mapping!");
 
                     fn(current, depth);
 
-                    for (int i = current.NumChildren - 1; i >= 0; i--) {
-                        UnityEngine.Debug.Log($"Getting child {i}, a.k.a. index {current.children[i]}!");
+                    for (int i = current.NumChildren - 1; i >= 0; i--)
                         stack.Push((current.children[i], depth + 1));
-                    }
                 }
             }
         }

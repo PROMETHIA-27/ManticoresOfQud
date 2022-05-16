@@ -1,8 +1,8 @@
 using PRM;
 using System.Collections.Immutable;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using XRL.UI;
 using XRL.UI.Framework;
 using XRL.CharacterBuilds.UI;
@@ -27,6 +27,8 @@ namespace XRL.CharacterBuilds.Qud.UI {
                 Description = "Remove Appendage"
             }
         );
+        
+        static readonly string[] limbChoices = LimbArchetype.Appendages.Select(arch => arch.name).ToArray();
 
         /// <summary>
         /// Important UI element, which contains the categories and elements of them
@@ -52,7 +54,11 @@ namespace XRL.CharacterBuilds.Qud.UI {
                         Popup.Show("You must select a part to add one to it.");
                         break;
                     }
-                    this.module.AddLimb(this.module.data.selectedPart.Unwrap());
+                    var choice = await Popup.AsyncShowOptionsList("Pick a limb type to add", limbChoices);
+                    var archetype = LimbArchetype.Appendages[choice];
+                    var name = await Popup.AskStringAsync("Pick a name for the limb", archetype.name, 100, 1);
+                    this.module.AddLimb(this.module.data.selectedPart.Unwrap(), archetype, name);
+                    this.module.data.selectedPart = new Option<BodyPart>();
                     this.module.builder.RefreshActiveWindow();
                     break;
                 case "RemoveLimb":
@@ -68,6 +74,7 @@ namespace XRL.CharacterBuilds.Qud.UI {
                     if (await Popup.ShowYesNoAsync($"&rAre you sure you want to remove {part.name}?") != DialogResult.Yes)
                         break;
                     this.module.RemoveLimb(this.module.data.selectedPart.Unwrap());
+                    this.module.data.selectedPart = new Option<BodyPart>();
                     this.module.builder.RefreshActiveWindow();
                     break;
             }
