@@ -288,7 +288,7 @@ namespace PRM {
             /// <param name="part">The part to iterate the children of in reverse</param>
             /// <returns>An IEnumerable which can be used in a foreach loop</returns>
             public IEnumerable<BodyPart> ReverseChildrenOf(BodyPart part) {
-                for (int i = part.NumChildren; i >= 0; i--)
+                for (int i = part.NumChildren - 1; i >= 0; i--) 
                     yield return this.partArena[part.children[i]].Unwrap();
             }
         }
